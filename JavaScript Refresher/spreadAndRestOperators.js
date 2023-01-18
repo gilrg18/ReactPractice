@@ -31,3 +31,5 @@ console.log(newPerson); //[object Object]{ age:26, name:'Gil'}
 const filter = (...args) => {
     return args.filter(el => el === 1); //=== checks for type and value equality
 }
+
+console.log(filter(1,2,3,1)); //[1.1]
