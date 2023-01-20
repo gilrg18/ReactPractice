@@ -1,3 +1,5 @@
+import ExpenseItem from "./components/ExpenseItem";
+
 function App() {
   //imperative way:
   //const para = document.createElement('p');
@@ -8,7 +10,7 @@ function App() {
     //declarative way:
     <div>
       <h2>Let's get started woo!</h2>
-      <p>Hello </p>
+      <ExpenseItem></ExpenseItem>
     </div>
   );
 }
