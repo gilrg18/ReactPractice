@@ -6,6 +6,7 @@ function Expenses(props) {
     <div className="expenses">
       {props.expenseList.map((expense) => (
         <ExpenseItem
+          key={expense.id}
           date={expense.date}
           amount={expense.amount}
           title={expense.title}
