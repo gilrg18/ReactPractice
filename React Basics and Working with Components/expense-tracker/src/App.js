@@ -1,3 +1,4 @@
+import React from 'react'; //React is always being used under the hood when using JSX code
 import Expenses from "./components/Expenses";
 
 function App() {
@@ -35,6 +36,15 @@ function App() {
       <Expenses expenseList = {expenses}></Expenses>
     </div>
   );
+
+  //Alternative to above JSX code using React object (harder to read and overal more complicated than JSX):
+  //React.createElement(element, attributes, content)
+  // return React.createElement(
+  //   "div",
+  //   {},
+  //   React.createElement("h2", {}, "Lets get started wowowo"),
+  //   React.createElement(Expenses, { expenseList: expenses })
+  // );
 }
 
 export default App;
