@@ -1,5 +1,6 @@
 import React from 'react'; //React is always being used under the hood when using JSX code
 import Expenses from "./components/Expenses/Expenses";
+import NewExpense from './components/NewExpense/NewExpense';
 
 const App = () => {
   const expenses = [
@@ -32,7 +33,7 @@ const App = () => {
   return (
     //declarative way:
     <div>
-      <h2>Let's get started woo!</h2>
+      <NewExpense/>
       <Expenses expenseList = {expenses}></Expenses>
     </div>
   );
