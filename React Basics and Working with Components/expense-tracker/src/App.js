@@ -25,6 +25,11 @@ const App = () => {
     },
   ];
 
+  const addExpenseHandler = expense => {
+    console.log('In App.js');
+    console.log(expense);
+  }
+
   //imperative way:
   //const para = document.createElement('p');
   //para.textContent = 'Hello';
@@ -33,7 +38,7 @@ const App = () => {
   return (
     //declarative way:
     <div>
-      <NewExpense/>
+      <NewExpense onAddExpense={addExpenseHandler}/>
       <Expenses expenseList = {expenses}></Expenses>
     </div>
   );
