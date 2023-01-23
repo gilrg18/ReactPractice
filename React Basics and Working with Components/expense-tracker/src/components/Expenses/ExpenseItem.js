@@ -8,7 +8,7 @@ const ExpenseItem = (props) => {
   //destructuring - useState returns the value and a function to update the value
   //usestate receives the initial value as parameter.
   const [title, setTitle] = useState(props.title);
-
+  //using const is fine cause we never reassign title using title =, setTitle does that for us when the component gets reevaluated
   //let title = props.title;
   //document.getElementById('root').addEventListener()
   //onClick prop adds and event listener to the <button> in a declarative way
