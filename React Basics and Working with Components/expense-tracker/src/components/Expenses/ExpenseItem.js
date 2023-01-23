@@ -1,4 +1,4 @@
-import { useState } from "react";
+//import { useState } from "react";
 
 import "./ExpenseItem.css";
 import ExpenseDate from "./ExpenseDate";
@@ -7,7 +7,7 @@ import Card from "../UI/Card";
 const ExpenseItem = (props) => {
   //destructuring - useState returns the value and a function to update the value
   //usestate receives the initial value as parameter.
-  const [title, setTitle] = useState(props.title);
+  //const [title, setTitle] = useState(props.title);
   //using const is fine cause we never reassign title using title =, setTitle does that for us when the component gets reevaluated
   //let title = props.title;
   //document.getElementById('root').addEventListener()
@@ -19,13 +19,13 @@ const ExpenseItem = (props) => {
   //   console.log('updated!!');
   // };
 
-  const clickHandler = () => {
-    //useState tells react that the component should be reevaluated and updates the component
-    setTitle('Updated!!');
-    //console log will print the first title first because setTitle doesnt change the value right away,
-    //it schedules the state update
-    console.log(title);
-  }
+  // const clickHandler = () => {
+  //   //useState tells react that the component should be reevaluated and updates the component
+  //   setTitle('Updated!!');
+  //   //console log will print the first title first because setTitle doesnt change the value right away,
+  //   //it schedules the state update
+  //   console.log(title);
+  // }
 
   //onClick={clickHandler} you pass it as a value, if you pass it as a function (clickHandler())
   //it will execute when the jsx gets rendered
@@ -37,10 +37,10 @@ const ExpenseItem = (props) => {
     <Card className="expense-item">
       <ExpenseDate date={props.date} />
       <div className="expense-item__description">
-        <h2>{title}</h2>
+        <h2>{props.title}</h2>
         <div className="expense-item__price">{props.amount}</div>
       </div>
-      <button onClick={clickHandler}>Change Title</button>
+      {/* <button onClick={clickHandler}>Change Title</button> */}
     </Card>
   );
 };
