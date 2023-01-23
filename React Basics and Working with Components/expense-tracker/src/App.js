@@ -1,7 +1,7 @@
 import React from 'react'; //React is always being used under the hood when using JSX code
 import Expenses from "./components/Expenses/Expenses";
 
-function App() {
+const App = () => {
   const expenses = [
     {
       id: "e1",

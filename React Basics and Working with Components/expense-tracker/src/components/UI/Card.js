@@ -1,6 +1,6 @@
 import "./Card.css";
 
-function Card(props) {
+const Card = (props) => {
   //className card es default + las classNames que vengan de los props
   //en este caso "expense-item" en ExpenseItem.js y "expenses" de Expenses.js
   const classes = "card " + props.className;

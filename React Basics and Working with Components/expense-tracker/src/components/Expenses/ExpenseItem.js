@@ -2,7 +2,7 @@ import "./ExpenseItem.css";
 import ExpenseDate from "./ExpenseDate";
 import Card from "../UI/Card";
 //A component in react IS a JS function
-function ExpenseItem(props) {
+const ExpenseItem = (props) => {
     
 
   //Its not allowed to have 2 or more root elements in a jsx return statement
