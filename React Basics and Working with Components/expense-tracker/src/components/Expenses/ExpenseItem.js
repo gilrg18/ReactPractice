@@ -46,3 +46,4 @@ const ExpenseItem = (props) => {
 };
 
 export default ExpenseItem;
+//This component is just there to output some data "STATELESS component" "Dumb Component"
