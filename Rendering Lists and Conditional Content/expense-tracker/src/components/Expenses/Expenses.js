@@ -21,6 +21,10 @@ const Expenses = (props) => {
         {/* Render Lists of Data using Array.map() method */}
         {props.expenseList.map((expense) => (
           <ExpenseItem
+          //You must add a key value, otherwise all items will be updated since the new item will be 
+          //added to the bottom of the list in the browser dom but in the top of the list in react so react
+          //will try and fix this by updating all items which could lead to bugs and performance issues
+          //This happens because thats how react works.. we beed a key prop to avoid these issues
             key={expense.id}
             date={expense.date}
             amount={expense.amount}
