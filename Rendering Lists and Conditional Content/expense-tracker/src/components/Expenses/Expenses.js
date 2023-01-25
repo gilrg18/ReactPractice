@@ -12,9 +12,9 @@ const Expenses = (props) => {
     console.log(selectedYear);
   };
 
-  const filteredExpenses = props.expenseList.filter(expense=>{
-    return expense.date.getFullYear().toString === filteredYear;
-  })
+  const filteredExpenses = props.expenseList.filter(expense=>{ 
+    return expense.date.getFullYear().toString() === filteredYear;
+  });
 
   return (
     <div>
@@ -24,6 +24,7 @@ const Expenses = (props) => {
           onChangeFilter={filterChangeHandler}
         />
         {/* Render Lists of Data using Array.map() method */}
+        {console.log(filteredExpenses)}
         {filteredExpenses.map((expense) => (
           <ExpenseItem
           //You must add a key value, otherwise all items will be updated since the new item will be 
