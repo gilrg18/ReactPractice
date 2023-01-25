@@ -12,9 +12,21 @@ const Expenses = (props) => {
     console.log(selectedYear);
   };
 
-  const filteredExpenses = props.expenseList.filter(expense=>{ 
+  const filteredExpenses = props.expenseList.filter((expense) => {
     return expense.date.getFullYear().toString() === filteredYear;
   });
+
+  let expensesContent = <p>No expenses found.</p>;
+  if(filteredExpenses.length>0){
+    expensesContent = filteredExpenses.map((expense) => (
+            <ExpenseItem
+              key={expense.id}
+              date={expense.date}
+              amount={expense.amount}
+              title={expense.title}
+            />
+          ))
+  }
 
   return (
     <div>
@@ -24,19 +36,7 @@ const Expenses = (props) => {
           onChangeFilter={filterChangeHandler}
         />
         {/* Render Lists of Data using Array.map() method */}
-        {console.log(filteredExpenses)}
-        {filteredExpenses.map((expense) => (
-          <ExpenseItem
-          //You must add a key value, otherwise all items will be updated since the new item will be 
-          //added to the bottom of the list in the browser dom but in the top of the list in react so react
-          //will try and fix this by updating all items which could lead to bugs and performance issues
-          //This happens because thats how react works.. we beed a unique key prop to avoid these issues
-            key={expense.id}
-            date={expense.date}
-            amount={expense.amount}
-            title={expense.title}
-          />
-        ))}
+        {expensesContent}
       </Card>
     </div>
   );
