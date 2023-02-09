@@ -4,6 +4,7 @@ import './CourseGoalItem.css';
 
 const CourseGoalItem = (props) => {
   const deleteHandler = () => {
+    //Add breakpoint in browser -> Sources -> localhost:3000 -> static/js ->D:/blalala -> /src or /webpack to find your component file
     props.onDelete(props.id);
   };
 
