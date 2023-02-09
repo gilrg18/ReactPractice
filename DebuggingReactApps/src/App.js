@@ -13,6 +13,7 @@ const App = () => {
   const addGoalHandler = enteredText => {
     setCourseGoals(prevGoals => {
       const updatedGoals = [...prevGoals];
+      //hardcoded string creates an error for unique ids
       updatedGoals.unshift({ text: enteredText, id: 'goal1' });
       return updatedGoals;
     });
