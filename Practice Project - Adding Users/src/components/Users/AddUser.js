@@ -7,16 +7,25 @@ import ErrorModal from "../UI/ErrorModal";
 const AddUser = (props) => {
   const [enteredUsername, setEnteredUsername] = useState("");
   const [enteredAge, setEnteredAge] = useState("");
+  const [error, setError] = useState();
 
   const addUserHandler = (event) => {
     //Prevents default reload when submitting a form which can mess with react state
     event.preventDefault();
     //trim removes excess whitespace
     if (enteredUsername.trim().length === 0 || enteredAge.trim().length === 0) {
+      setError({
+        title: "Invalid input",
+        message: "Please enter a valid name and age (non-empty values).",
+      });
       return;
     }
     //force conversion of enteredAge from string to number by adding +
     if (+enteredAge < 1) {
+      setError({
+        title: "Invalid input",
+        message: "Please enter a valid age (Greater than 0).",
+      });
       return;
     }
     props.onAddUser(enteredUsername, enteredAge);
@@ -32,12 +41,19 @@ const AddUser = (props) => {
     setEnteredAge(event.target.value);
   };
 
+  const errorHandler = () => {
+    setError(null);
+  };
+
   return (
     <div>
-      <ErrorModal
-        title="An error occured!"
-        message="Something went wrong!"
-      ></ErrorModal>
+      {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          onConfirm={errorHandler}
+        ></ErrorModal>
+      )}
       <Card className={classes.input}>
         <form onSubmit={addUserHandler}>
           <label htmlFor="username">Username</label>
