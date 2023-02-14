@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from "react";
 
-import Card from '../UI/Card';
-import Button from '../UI/Button';
-import ErrorModal from '../UI/ErrorModal';
-import Wrapper from '../Helpers/Wrapper';
-import classes from './AddUser.module.css';
+import Card from "../UI/Card";
+import Button from "../UI/Button";
+import ErrorModal from "../UI/ErrorModal";
+import Wrapper from "../Helpers/Wrapper";
+import classes from "./AddUser.module.css";
 
 const AddUser = (props) => {
   //We know rely on refs to read the values instead of state, which is less code
@@ -33,11 +33,10 @@ const AddUser = (props) => {
       return;
     }
     props.onAddUser(enteredName, enteredUserAge);
-    //you shouldnt manipulate the DOM like this but this is a rare case so its fine i guess 
-    nameInputRef.current.value='';
-    ageInputRef.current.value='';
+    //you shouldnt manipulate the DOM like this but this is a rare case so its fine i guess
+    nameInputRef.current.value = "";
+    ageInputRef.current.value = "";
   };
-
 
   const errorHandler = () => {
     setError(null);
@@ -55,17 +54,9 @@ const AddUser = (props) => {
       <Card className={classes.input}>
         <form onSubmit={addUserHandler}>
           <label htmlFor="username">Username</label>
-          <input
-            id="username"
-            type="text"
-            ref={nameInputRef}
-          />
+          <input id="username" type="text" ref={nameInputRef} />
           <label htmlFor="age">Age (Years)</label>
-          <input
-            id="age"
-            type="number"
-            ref={ageInputRef}
-          />
+          <input id="age" type="number" ref={ageInputRef} />
           <Button type="submit">Add User</Button>
         </form>
       </Card>
@@ -74,3 +65,10 @@ const AddUser = (props) => {
 };
 
 export default AddUser;
+
+//Uncontrolled components access values with a ref because the values
+//are not controlled by react, we rely on the default behaviour of the input
+//and we then just fetch it with a react feature (useRef) but we dont feed data back
+//into the input. 
+
+//Uncontrolled because we are not controlling the state of the input element with react
