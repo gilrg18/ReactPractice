@@ -11,37 +11,37 @@ const Login = (props) => {
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
-  useEffect(() => {
-    console.log("Effect Running");
-  }); //this will run everytime the component function reruns, everytime an state changes
+  // useEffect(() => {
+  //   console.log("Effect Running");
+  // }); //this will run everytime the component function reruns, everytime an state changes
 
-  useEffect(() => {
-    console.log("Effect Running only on first mount");
-  }, []); //this will run only the first time the component mounts
+  // useEffect(() => {
+  //   console.log("Effect Running only on first mount");
+  // }, []); //this will run only the first time the component mounts
 
-  useEffect(() => {
-    console.log("Effect Running on password input change");
-  }, [enteredPassword]);
-  //this will run everytime enteredPassword changes
+  // useEffect(() => {
+  //   console.log("Effect Running on password input change");
+  // }, [enteredPassword]);
+  // //this will run everytime enteredPassword changes
 
-  useEffect(() => {
-    console.log(
-      "Effect Running on password input change with cleanup function"
-    );
+  // useEffect(() => {
+  //   console.log(
+  //     "Effect Running on password input change with cleanup function"
+  //   );
 
-    return () => {
-      console.log("Effect cleanup runs before the next useEffect run");
-    };
-  }, [enteredPassword]);
+  //   return () => {
+  //     console.log("Effect cleanup runs before the next useEffect run");
+  //   };
+  // }, [enteredPassword]);
 
   
-  useEffect(() => {
-    console.log("Effect Running without dependencies");
+  // useEffect(() => {
+  //   console.log("Effect Running without dependencies");
 
-    return () => {
-      console.log("Effect cleanup runs on component unmount");
-    };
-  }, []);
+  //   return () => {
+  //     console.log("Effect cleanup runs on component unmount");
+  //   };
+  // }, []);
 
   //useEffect is useful when we need to rerun logic when certain data change
   //(tipically some state or props)
