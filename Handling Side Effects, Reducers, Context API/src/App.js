@@ -16,7 +16,8 @@ function App() {
     if (storedUserLoggedInInformation === "1") {
       setIsLoggedIn(true);
     }
-  },[]);  
+
+  },[]);  //Will only run once, at the start, when the page is first rendered or when it reloads.
 
   const loginHandler = (email, password) => {
     // We should of course check email and password
