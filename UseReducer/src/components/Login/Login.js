@@ -5,15 +5,15 @@ import classes from "./Login.module.css";
 import Button from "../UI/Button/Button";
 
 const emailReducer = (state, action) => {
-  if (action.type === "USER_INPUT"){
-    return { value: action.val, isValid: action.val.includes('@') };
+  if (action.type === "USER_INPUT") {
+    return { value: action.val, isValid: action.val.includes("@") };
   }
-  if(action.type === 'INPUT_BLUR'){
-    //state is guaranteed to be the absolute last state snapshot 
+  if (action.type === "INPUT_BLUR") {
+    //state is guaranteed to be the absolute last state snapshot
     //react gives us this state snapshot and makes sure its the latest one
-    return { value: state.value, isValid: state.value.includes('@')};
+    return { value: state.value, isValid: state.value.includes("@") };
   }
-   return { value: "", isValid: false };
+  return { value: "", isValid: false };
 };
 
 const pwReducer = (state, action) => {
@@ -55,41 +55,52 @@ const Login = (props) => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   const identifier = setTimeout(() => {
-  //     console.log('Checking form validity!');
-  //     setFormIsValid(
-  //       enteredEmail.includes('@') && enteredPassword.trim().length > 6
-  //     );
-  //   }, 500);
+  //{ destructured value: alias}
+  const { isValid: emailIsValid } = emailState;
+  const { isValid: pwIsValid } = pwState;
 
-  //   return () => {
-  //     console.log('CLEANUP');
-  //     clearTimeout(identifier);
-  //   };
-  // }, [enteredEmail, enteredPassword]);
+  useEffect(() => {
+    const identifier = setTimeout(() => {
+      console.log("Checking form validity!");
+      //with useEffect we guarantee that this will run for every state update react performs
+      //which was not the case before
+      setFormIsValid(
+        //emailState.isValid && pwState.isValid
+        //now the problem is that if the password gets longer, it is still valid so we dont need validation again
+        // so we use a tecnique named object destructuring (line 58)
+        emailIsValid && pwIsValid
+      );
+    }, 500);
+
+    return () => {
+      console.log("CLEANUP");
+      clearTimeout(identifier);
+    };
+  }, [emailIsValid, pwIsValid]); //now it will only validate when the valid value changes and all the email or pw state
 
   const emailChangeHandler = (event) => {
     dispatchEmail({ type: "USER_INPUT", val: event.target.value });
 
-    setFormIsValid(
-      event.target.value.includes("@") && pwState.isValid
-    );
+    //this is not a good way to use state since we depend on emailState and pwState changes
+    //so its better to do it by using useEffect
+    // setFormIsValid(
+    //   event.target.value.includes("@") && pwState.isValid
+    // );
   };
 
   const passwordChangeHandler = (event) => {
     //setEnteredPassword(event.target.value);
-    dispatchPw({type: "USER_INPUT", val: event.target.value});
-    setFormIsValid(emailState.isValid && event.target.value.trim().length > 6);
+    dispatchPw({ type: "USER_INPUT", val: event.target.value });
+    // setFormIsValid(emailState.isValid && event.target.value.trim().length > 6);
   };
 
   const validateEmailHandler = () => {
-    dispatchEmail({type: 'INPUT_BLUR'});
+    dispatchEmail({ type: "INPUT_BLUR" });
   };
 
   const validatePasswordHandler = () => {
     //setPasswordIsValid(enteredPassword.trim().length > 6);
-    dispatchPw({type:'INPUT_BLUR'});
+    dispatchPw({ type: "INPUT_BLUR" });
   };
 
   const submitHandler = (event) => {
