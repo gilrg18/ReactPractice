@@ -32,10 +32,13 @@ function App() {
     <AuthContext.Provider
       value={{
         isLoggedIn: isLoggedIn,
+        onLogout: logoutHandler
       }}
     >
       <MainHeader onLogout={logoutHandler} />
       <main>
+        {/*We leave onLogin and onLogout as props because we are directly using
+        those functions in the Login and Home components and not forwarding them on and on*/}
         {!isLoggedIn && <Login onLogin={loginHandler} />}
         {isLoggedIn && <Home onLogout={logoutHandler} />}
       </main>
