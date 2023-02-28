@@ -12,10 +12,10 @@ const cartReducer = (state, action) => {
   if (action.type === "ADD"){
     //concat returns a total new array, different from push which works with the current array
     //which is better for react because of how state works
-    const updateItems = state.items.concat(action.item);
+    const updatedItems = state.items.concat(action.item);
     const updatedTotalAmount = state.totalAmount + action.item.price * action.item.amount
     return {
-        items:updateItems,
+        items:updatedItems,
         totalAmount: updatedTotalAmount
     };
   }
