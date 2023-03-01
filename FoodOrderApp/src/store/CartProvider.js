@@ -9,18 +9,36 @@ const defaultCartState = {
 //reducer function goes outside of the component because it doesnt need any data from it
 //state is the last state snapshot of the state managed by the reducer
 const cartReducer = (state, action) => {
-  if (action.type === "ADD"){
-    //concat returns a total new array, different from push which works with the current array
-    //which is better for react because of how state works
-    const updatedItems = state.items.concat(action.item);
-    const updatedTotalAmount = state.totalAmount + action.item.price * action.item.amount
+  if (action.type === "ADD") {
+    const updatedTotalAmount =
+      state.totalAmount + action.item.price * action.item.amount;
+    //findIndex() built it js method to find an items index in an array
+    const existingCartItemIndex = state.items.findIndex(
+      (item) => item.id === action.item.id
+    );
+    const existingCartItem = state.items[existingCartItemIndex];
+    let updatedItems;
+    //updating an existing item in the cart
+    if (existingCartItem) {
+      const updatedItem = {
+        ...existingCartItem,
+        amount: existingCartItem.amount + action.item.amount,
+      };
+      updatedItems = [...state.items];
+      updatedItems[existingCartItemIndex] = updatedItem;
+    } else {
+      //concat returns a total new array, different from push which works with the current array
+      //concat is better for react because of how state works
+      updatedItems = state.items.concat(action.item);
+    }
+    
     return {
-        items:updatedItems,
-        totalAmount: updatedTotalAmount
+      items: updatedItems,
+      totalAmount: updatedTotalAmount,
     };
   }
-    //return a new state snapshot
-    return defaultCartState;
+  //return a new state snapshot
+  return defaultCartState;
 };
 
 const CartProvider = (props) => {
@@ -31,10 +49,10 @@ const CartProvider = (props) => {
     defaultCartState
   );
   const addItemToCartHandler = (item) => {
-    dispatchCartAction({ type: 'ADD', item: item }); //you can name the variables whatever you want fe: identifier: 'ADD'
+    dispatchCartAction({ type: "ADD", item: item }); //you can name the variables whatever you want fe: identifier: 'ADD'
   };
   const removeItemFromCartHandler = (id) => {
-    dispatchCartAction({type:'REMOVE', id: id})
+    dispatchCartAction({ type: "REMOVE", id: id });
   };
 
   const cartContext = {
