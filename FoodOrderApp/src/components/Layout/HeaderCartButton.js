@@ -32,7 +32,7 @@ const HeaderCartButton = (props) => {
     //cleanup function
     return () => {
       clearTimeout(timer); //clear old timer
-      console.log(items);
+      //console.log(items);
     };
   }, [items]);
 
