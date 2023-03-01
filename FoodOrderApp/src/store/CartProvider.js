@@ -31,10 +31,31 @@ const cartReducer = (state, action) => {
       //concat is better for react because of how state works
       updatedItems = state.items.concat(action.item);
     }
-    
+
     return {
       items: updatedItems,
       totalAmount: updatedTotalAmount,
+    };
+  }
+  if (action.type === "REMOVE") {
+    const existingCartItemIndex = state.items.findIndex(
+      (item) => item.id === action.id
+    );
+    const existingItem = state.items[existingCartItemIndex];
+    const updatedTotalAmount = state.totalAmount - existingItem.price;
+    let updatedItems;
+    //remove the item from the array
+    if(existingItem.amount === 1){
+      updatedItems = state.items.filter(item => item.id !== action.id)
+    //decrease the amount
+    }else{
+      const updatedItem = {...existingItem, amount:existingItem.amount - 1};
+      updatedItems = [...state.items];
+      updatedItems[existingCartItemIndex] = updatedItem;
+    }
+    return {
+      items: updatedItems,
+      totalAmount: updatedTotalAmount
     };
   }
   //return a new state snapshot
