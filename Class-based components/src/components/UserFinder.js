@@ -1,14 +1,12 @@
-import { Fragment,  Component } from "react";
+import { Fragment, Component } from "react";
 import classes from "./UserFinder.module.css";
 import Users from "./Users";
-
-const DUMMY_USERS = [
-  { id: "u1", name: "Gil" },
-  { id: "u2", name: "Mike" },
-  { id: "u3", name: "Laura" },
-];
+import UsersContext from "../store/users-context";
 
 class UserFinder extends Component {
+//you can only connect one context to a class based component
+  static contextType = UsersContext;
+
   constructor() {
     super();
     this.state = {
@@ -18,20 +16,20 @@ class UserFinder extends Component {
   }
 
   //will only run once - when the component was initially rendered for the first time
-  componentDidMount(){
+  componentDidMount() {
     // Send http request...
-    this.setState({filteredUsers: DUMMY_USERS})
+    this.setState({ filteredUsers: this.context.users });
   }
-  
+
   //the previous props and state before the current component update
   componentDidUpdate(prevProps, prevState) {
     //if to prevent an infinite loop because componentDidUpdate gets called whenever the state changes
     if (prevState.searchTerm !== this.state.searchTerm) {
-        this.setState({
-          filteredUsers: DUMMY_USERS.filter((user) =>
-            user.name.includes(this.state.searchTerm)
-          ),
-        });
+      this.setState({
+        filteredUsers: this.context.users.filter((user) =>
+          user.name.includes(this.state.searchTerm)
+        ),
+      });
     }
   }
 
@@ -42,10 +40,13 @@ class UserFinder extends Component {
   render() {
     return (
       <Fragment>
+        {/*<UsersContext.Consumer>*/}{" "}
+        {/*Context.Consumer is one way of using context*/}
         <div className={classes.finder}>
           <input type="search" onChange={this.searchChangeHandler.bind(this)} />
         </div>
         <Users users={this.state.filteredUsers} />
+        {/*</UsersContext.Consumer>*/}
       </Fragment>
     );
   }
