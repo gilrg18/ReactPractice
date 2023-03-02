@@ -1,5 +1,5 @@
-import { Fragment, useState, useEffect } from "react";
-import classes from './UserFinder.module.css';
+import { Fragment,  Component } from "react";
+import classes from "./UserFinder.module.css";
 import Users from "./Users";
 
 const DUMMY_USERS = [
@@ -8,38 +8,80 @@ const DUMMY_USERS = [
   { id: "u3", name: "Laura" },
 ];
 
-const UserFinder = () => {
-  const [filteredUsers, setFilteredUsers] = useState(DUMMY_USERS);
-  const [searchTerm, setSearchTerm] = useState("");
+class UserFinder extends Component {
+  constructor() {
+    super();
+    this.state = {
+      filteredUsers: [],
+      searchTerm: "",
+    };
+  }
 
-  useEffect(() => {
-    setFilteredUsers(
-      DUMMY_USERS.filter((user) => user.name.includes(searchTerm))
+  //will only run once - when the component was initially rendered for the first time
+  componentDidMount(){
+    // Send http request...
+    this.setState({filteredUsers: DUMMY_USERS})
+  }
+  
+  //the previous props and state before the current component update
+  componentDidUpdate(prevProps, prevState) {
+    //if to prevent an infinite loop because componentDidUpdate gets called whenever the state changes
+    if (prevState.searchTerm !== this.state.searchTerm) {
+        this.setState({
+          filteredUsers: DUMMY_USERS.filter((user) =>
+            user.name.includes(this.state.searchTerm)
+          ),
+        });
+    }
+  }
+
+  searchChangeHandler(event) {
+    this.setState({ searchTerm: event.target.value });
+  }
+
+  render() {
+    return (
+      <Fragment>
+        <div className={classes.finder}>
+          <input type="search" onChange={this.searchChangeHandler.bind(this)} />
+        </div>
+        <Users users={this.state.filteredUsers} />
+      </Fragment>
     );
-  }, [searchTerm]);
+  }
+}
 
-  const searchChangeHandler = (event) => {
-    setSearchTerm(event.target.value);
-  };
+// const UserFinder = () => {
+//   const [filteredUsers, setFilteredUsers] = useState(DUMMY_USERS);
+//   const [searchTerm, setSearchTerm] = useState("");
 
-  return (
-    <Fragment>
-      <div className={classes.finder}>
-        <input type="search" onChange={searchChangeHandler} />
-      </div>
-      <Users users={filteredUsers} />
-    </Fragment>
-  );
-};
+//   useEffect(() => {
+//     setFilteredUsers(
+//       DUMMY_USERS.filter((user) => user.name.includes(searchTerm))
+//     );
+//   }, [searchTerm]);
+
+//   const searchChangeHandler = (event) => {
+//     setSearchTerm(event.target.value);
+//   };
+
+//   return (
+//     <Fragment>
+//       <div className={classes.finder}>
+//         <input type="search" onChange={searchChangeHandler} />
+//       </div>
+//       <Users users={filteredUsers} />
+//     </Fragment>
+//   );
+// };
 
 export default UserFinder;
-
 
 //Class-based components lifecycle:
 /**
  * componentDidMount() - called once component mounted - useEffect(..., []) (empty dependency array)
- * componentDidUpdate() - called once component updated - useEffect(...,[someValue]) 
- * componentWillUnmount() - called right before component is unmounted (removed from DOM) - 
- * useEffect(()=>{return () => {...}},[]) (same as useEffect cleanup function that triggers before the 
+ * componentDidUpdate() - called once component state updated - useEffect(...,[someValue])
+ * componentWillUnmount() - called right before component is unmounted (removed from DOM) -
+ * useEffect(()=>{return () => {...}},[]) (same as useEffect cleanup function that triggers before the
  * next useEffect or when the component unmounts)
  */
