@@ -3,11 +3,6 @@ import User from './User';
 
 import classes from './Users.module.css';
 
-const DUMMY_USERS = [
-  { id: 'u1', name: 'Gil' },
-  { id: 'u2', name: 'Mike' },
-  { id: 'u3', name: 'Laura' },
-];
 
 //in react 16.8 hooks were introduced to manage state in functional components
 //prior that, only class components could manage state
@@ -33,7 +28,7 @@ class Users extends Component{
   render(){
       const usersList = (
         <ul>
-          {DUMMY_USERS.map((user) => (
+          {this.props.users.map((user) => (
             <User key={user.id} name={user.name} />
           ))}
         </ul>
