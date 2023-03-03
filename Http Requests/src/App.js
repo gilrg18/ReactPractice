@@ -5,8 +5,10 @@ import "./App.css";
 
 function App() {
   const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   //Replacing .then calls with async await for readability purposes (works the same)
   async function fetchMoviesHandler() {
+    setIsLoading(true);
     //the default method is GET
     //fetch returns a PROMISE which is an object with data
     const response = await fetch("https://swapi.dev/api/films/");
@@ -21,6 +23,7 @@ function App() {
       };
     });
     setMovies(transformedMovies);
+    setIsLoading(false);
   }
 
   return (
@@ -29,7 +32,9 @@ function App() {
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       </section>
       <section>
-        <MoviesList movies={movies} />
+        {isLoading && <p>Loading...</p>}
+        {!isLoading && movies.length === 0 && <p>Found no movies.</p>}
+        {!isLoading && movies.length> 0 && <MoviesList movies={movies} />}
       </section>
     </React.Fragment>
   );
