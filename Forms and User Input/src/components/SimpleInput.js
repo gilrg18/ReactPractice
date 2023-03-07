@@ -11,13 +11,21 @@ const SimpleInput = (props) => {
     setEnteredName(event.target.value);
   };
 
+  const nameInputBlurHandler = event => {
+    setEnteredNameTouched(true);
+    if (enteredName.trim() === "") {
+      setEnteredNameIsValid(false);
+      return;
+    }
+  }
+
   const formSubmissionHandler = (event) => {
     event.preventDefault();
     //validation in the front end is just for user experience since it can be accesed and hacked by the clientside users
     //validation should be programmed in the backend
 
     setEnteredNameTouched(true);
-    
+
     if (enteredName.trim() === "") {
       setEnteredNameIsValid(false);
       return;
@@ -44,6 +52,7 @@ const SimpleInput = (props) => {
           ref={nameInputRef}
           type="text"
           id="name"
+          onBlur={nameInputBlurHandler}//whenever the input looses focus
           onChange={nameInputChangeHandler}
           value={enteredName}
         />
