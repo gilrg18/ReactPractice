@@ -1,4 +1,3 @@
-import { useState } from "react";
 import useInput from "../hooks/use-input";
 
 const SimpleInput = (props) => {
@@ -9,52 +8,46 @@ const SimpleInput = (props) => {
     hasError: nameInputHasError,
     valueChangeHandler: nameChangedHandler,
     inputBlurHandler: nameBlurHandler,
-    reset: resetNameInput
-  } = useInput(value=>value.trim()!=='');
- 
-  const [enteredMail, setEnteredMail] = useState("");
-  const [enteredMailTouched, setEnteredMailTouched] = useState(false);
+    reset: resetNameInput,
+  } = useInput((value) => value.trim() !== "");
 
-  const enteredMailIsValid =
-    enteredMail.includes("@") && enteredMail.trim() !== "";
-  const mailInputIsInvalid = !enteredMailIsValid && enteredMailTouched;
+  const {
+    value: enteredEmail,
+    isValid: enteredEmailIsValid,
+    hasError: emailInputHasError,
+    valueChangeHandler: emailChangeHandler,
+    inputBlurHandler: emailBlurHandler,
+    reset: resetEmailInput,
+  } = useInput(value => value.includes('@') && value.trim() !== "");
 
   let formIsValid = false;
 
-  if (enteredNameIsValid && enteredMailIsValid) {
+  if (enteredNameIsValid && enteredEmailIsValid) {
     formIsValid = true;
   }
 
-  const mailInputChangeHandler = (event) => {
-    setEnteredMail(event.target.value);
-  };
-
-  const mailInputBlurHandler = (event) => {
-    setEnteredMailTouched(true);
-  };
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
     //validation in the front end is just for user experience since it can be accesed and hacked by the clientside users
     //validation should be programmed in the backend
 
-    if (!enteredNameIsValid || !enteredMailIsValid) {
+    if (!enteredNameIsValid || !enteredEmailIsValid) {
       return;
     }
 
     console.log(enteredName);
-    console.log(enteredMail);
-    //nameInputRef.current.value=''; //you shouldnt manipulate the DOM directly like this, react should be the one manipulating the DOM
+    console.log(enteredEmail);
+
     resetNameInput();
-    setEnteredMail("");
-    setEnteredMailTouched(false);
+    resetEmailInput();
   };
 
   const nameInputClasses = nameInputHasError
     ? "form-control invalid"
     : "form-control";
 
-  const mailInputClasses = mailInputIsInvalid
+  const mailInputClasses = emailInputHasError
     ? "form-control invalid"
     : "form-control";
 
@@ -78,11 +71,11 @@ const SimpleInput = (props) => {
         <input
           type="email"
           id="mail"
-          onBlur={mailInputBlurHandler} //whenever the input looses focus
-          onChange={mailInputChangeHandler}
-          value={enteredMail}
+          onBlur={emailBlurHandler} //whenever the input looses focus
+          onChange={emailChangeHandler}
+          value={enteredEmail}
         />
-        {mailInputIsInvalid && (
+        {emailInputHasError && (
           <p className="error-text">Please enter a valid email.</p>
         )}
       </div>
