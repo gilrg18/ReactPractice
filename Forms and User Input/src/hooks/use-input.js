@@ -1,34 +1,55 @@
-import { useState } from "react";
+import { useReducer } from "react";
+
+const initialInputState = {
+  value: "",
+  isTouched: false,
+};
+//reducer function
+const inputStateReducer = (state, action) => {
+  switch (action.type) {
+    case 'INPUT':
+        console.log("input");
+      return { value: action.value, isTouched: state.isTouched };
+    case 'BLUR':
+        console.log("blur");
+      return { value: state.value, isTouched: true };
+    case 'RESET':
+        console.log('reset')
+      return { value: "", isTouched: false };
+    default:
+      return initialInputState;
+  }
+};
 
 const useInput = (validateValue) => {
-  //custom hooks in general should be generic and not limited to one specific input
-  const [enteredValue, setEnteredValue] = useState("");
-  const [isTouched, setIsTouched] = useState(false);
+  const [inputState, dispatch] = useReducer(
+    inputStateReducer,
+    initialInputState
+  );
 
-  const valueIsValid = validateValue(enteredValue);
-  const hasError = !valueIsValid && isTouched;
+  const valueIsValid = validateValue(inputState.value);
+  const hasError = !valueIsValid && inputState.isTouched;
 
   const valueChangeHandler = (event) => {
-    setEnteredValue(event.target.value);
+    dispatch({ type: "INPUT", value: event.target.value });
   };
 
   const inputBlurHandler = (event) => {
-    setIsTouched(true);
+    dispatch({ type: "BLUR" });
   };
 
-  const reset = () =>{
-    setEnteredValue('');
-    setIsTouched(false);
-  }
+  const reset = () => {
+    dispatch({ type: "RESET" });
+  };
 
   return {
     //key: value,
-    value: enteredValue,
+    value: inputState.value,
     isValid: valueIsValid,
     hasError,
     valueChangeHandler,
     inputBlurHandler,
-    reset
+    reset,
   };
 };
 
