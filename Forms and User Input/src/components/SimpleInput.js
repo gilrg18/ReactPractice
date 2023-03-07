@@ -3,21 +3,26 @@ import { useState } from "react";
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState("");
   const [enteredNameTouched, setEnteredNameTouched] = useState(false);
-  
-  //useState for validation and to reset / useRef cant do this
-  //useRef if you only want to use the data once
 
   //deriving state from enteredName
   const enteredNameIsValid = enteredName.trim() !== "";
   const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
- 
+
+  const [enteredMail, setEnteredMail] = useState("");
+  const [enteredMailTouched, setEnteredMailTouched] = useState(false);
+
+  const enteredMailIsValid = enteredMail.includes("@") && enteredMail.trim() !=="";
+  const mailInputIsInvalid = !enteredMailIsValid && enteredMailTouched;
+
+  //useState for validation and to reset / useRef cant do this
+  //useRef if you only want to use the data once
+
   //const formIsValid = enteredNameIsValid && enteredAge && enteredOtherInputField and so on;
   let formIsValid = false;
 
-  if(enteredNameIsValid){
+  if (enteredNameIsValid && enteredMailIsValid) {
     formIsValid = true;
   }
- 
 
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
@@ -27,24 +32,37 @@ const SimpleInput = (props) => {
     setEnteredNameTouched(true);
   };
 
+  const mailInputChangeHandler = (event) => {
+    setEnteredMail(event.target.value);
+  };
+
+  const mailInputBlurHandler = (event) => {
+    setEnteredMailTouched(true);
+  };
+
   const formSubmissionHandler = (event) => {
     event.preventDefault();
     //validation in the front end is just for user experience since it can be accesed and hacked by the clientside users
     //validation should be programmed in the backend
 
-    setEnteredNameTouched(true);
-
-    if (!enteredNameIsValid) {
+    if (!enteredNameIsValid || !enteredMailIsValid) {
       return;
     }
 
     console.log(enteredName);
+    console.log(enteredMail);
     //nameInputRef.current.value=''; //you shouldnt manipulate the DOM directly like this, react should be the one manipulating the DOM
     setEnteredName("");
     setEnteredNameTouched(false);
+    setEnteredMail("");
+    setEnteredMailTouched(false);
   };
 
   const nameInputClasses = nameInputIsInvalid
+    ? "form-control invalid"
+    : "form-control";
+
+  const mailInputClasses = mailInputIsInvalid
     ? "form-control invalid"
     : "form-control";
 
@@ -61,6 +79,19 @@ const SimpleInput = (props) => {
         />
         {nameInputIsInvalid && (
           <p className="error-text">Name must not be empty.</p>
+        )}
+      </div>
+      <div className={mailInputClasses}>
+        <label htmlFor="mail">Your E-Mail</label>
+        <input
+          type="email"
+          id="mail"
+          onBlur={mailInputBlurHandler} //whenever the input looses focus
+          onChange={mailInputChangeHandler}
+          value={enteredMail}
+        />
+        {mailInputIsInvalid && (
+          <p className="error-text">Please enter a valid email.</p>
         )}
       </div>
       <div className="form-actions">
