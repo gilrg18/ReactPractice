@@ -3,21 +3,28 @@ import { useState } from "react";
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState("");
   const [enteredNameTouched, setEnteredNameTouched] = useState(false);
+  
   //useState for validation and to reset / useRef cant do this
   //useRef if you only want to use the data once
-  
+
   //deriving state from enteredName
-  const enteredNameIsValid = enteredName.trim() !== '';
+  const enteredNameIsValid = enteredName.trim() !== "";
   const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
-  
+ 
+  //const formIsValid = enteredNameIsValid && enteredAge && enteredOtherInputField and so on;
+  let formIsValid = false;
+
+  if(enteredNameIsValid){
+    formIsValid = true;
+  }
+ 
+
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
-
   };
 
   const nameInputBlurHandler = (event) => {
     setEnteredNameTouched(true);
-
   };
 
   const formSubmissionHandler = (event) => {
@@ -30,13 +37,12 @@ const SimpleInput = (props) => {
     if (!enteredNameIsValid) {
       return;
     }
-    
+
     console.log(enteredName);
     //nameInputRef.current.value=''; //you shouldnt manipulate the DOM directly like this, react should be the one manipulating the DOM
     setEnteredName("");
     setEnteredNameTouched(false);
   };
-
 
   const nameInputClasses = nameInputIsInvalid
     ? "form-control invalid"
@@ -58,7 +64,7 @@ const SimpleInput = (props) => {
         )}
       </div>
       <div className="form-actions">
-        <button>Submit</button>
+        <button disabled={!formIsValid}>Submit</button>
       </div>
     </form>
   );
