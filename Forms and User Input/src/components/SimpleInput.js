@@ -3,7 +3,8 @@ import { useRef, useState } from "react";
 const SimpleInput = (props) => {
   const nameInputRef = useRef();
   const [enteredName, setEnteredName] = useState("");
-  const [enteredNameIsValid, setEnteredNameIsValid] = useState(true);
+  const [enteredNameIsValid, setEnteredNameIsValid] = useState(false);
+  const [enteredNameTouched, setEnteredNameTouched] = useState(false);
   //useState for validation and to reset / useRef cant do this
   //useRef if you only want to use the data once
   const nameInputChangeHandler = (event) => {
@@ -14,6 +15,9 @@ const SimpleInput = (props) => {
     event.preventDefault();
     //validation in the front end is just for user experience since it can be accesed and hacked by the clientside users
     //validation should be programmed in the backend
+
+    setEnteredNameTouched(true);
+    
     if (enteredName.trim() === "") {
       setEnteredNameIsValid(false);
       return;
@@ -26,7 +30,11 @@ const SimpleInput = (props) => {
     setEnteredName("");
   };
 
-  const nameInputClasses = enteredNameIsValid ? 'form-control' : 'form-control invalid';
+  const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
+
+  const nameInputClasses = nameInputIsInvalid
+    ? "form-control invalid"
+    : "form-control";
 
   return (
     <form onSubmit={formSubmissionHandler}>
@@ -39,7 +47,9 @@ const SimpleInput = (props) => {
           onChange={nameInputChangeHandler}
           value={enteredName}
         />
-        {!enteredNameIsValid && <p className='error-text'>Name must not be empty.</p>}
+        {nameInputIsInvalid && (
+          <p className="error-text">Name must not be empty.</p>
+        )}
       </div>
       <div className="form-actions">
         <button>Submit</button>
