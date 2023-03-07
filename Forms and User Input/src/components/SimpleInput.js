@@ -3,7 +3,8 @@ import { useRef, useState } from "react";
 const SimpleInput = (props) => {
   const nameInputRef = useRef();
   const [enteredName, setEnteredName] = useState("");
-
+  //useState for validation and to reset / useRef cant do this
+  //useRef if you only want to use the data once
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
   };
@@ -13,7 +14,11 @@ const SimpleInput = (props) => {
     console.log(enteredName);
     const enteredValue = nameInputRef.current.value;
     console.log(enteredValue);
+    //nameInputRef.current.value=''; //you shouldnt manipulate the DOM directly like this, react should be the one manipulating the DOM
+    setEnteredName('');
   };
+
+  
 
   return (
     <form onSubmit={formSubmissionHandler}>
@@ -24,6 +29,7 @@ const SimpleInput = (props) => {
           type="text"
           id="name"
           onChange={nameInputChangeHandler}
+          value={enteredName}
         />
       </div>
       <div className="form-actions">
