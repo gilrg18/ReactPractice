@@ -7,17 +7,22 @@ const SimpleInput = (props) => {
   const [enteredNameTouched, setEnteredNameTouched] = useState(false);
   //useState for validation and to reset / useRef cant do this
   //useRef if you only want to use the data once
+
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
+    //we cant use enteredName because the scheduling doesnt update the state instantly
+    //so we use event.target.value
+    if (event.target.value.trim() !== "") {
+      setEnteredNameIsValid(true);
+    }
   };
 
-  const nameInputBlurHandler = event => {
+  const nameInputBlurHandler = (event) => {
     setEnteredNameTouched(true);
     if (enteredName.trim() === "") {
-      setEnteredNameIsValid(false);
-      return;
+      setEnteredNameIsValid(false);  
     }
-  }
+  };
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
@@ -52,7 +57,7 @@ const SimpleInput = (props) => {
           ref={nameInputRef}
           type="text"
           id="name"
-          onBlur={nameInputBlurHandler}//whenever the input looses focus
+          onBlur={nameInputBlurHandler} //whenever the input looses focus
           onChange={nameInputChangeHandler}
           value={enteredName}
         />
