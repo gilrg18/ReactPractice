@@ -11,6 +11,11 @@ const SimpleInput = (props) => {
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
+    //validation in the front end is just for user experience since it can be accesed and hacked by the clientside users
+    //validation should be programmed in the backend
+    if(enteredName.trim() == ''){
+      return;
+    }
     console.log(enteredName);
     const enteredValue = nameInputRef.current.value;
     console.log(enteredValue);
