@@ -7,27 +7,39 @@ import { useEffect, useState } from "react";
 //rest api endpoint.
 const AvailableMeals = () => {
   const [meals, setMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchMeals = async () => {
-      const response = await fetch("https://meals-91b12-default-rtdb.firebaseio.com/meals.json");
+      const response = await fetch(
+        "https://meals-91b12-default-rtdb.firebaseio.com/meals.json"
+      );
       const responseData = await response.json(); //fetch returns a promise so we have to use await keyword
-    
+
       const loadedMeals = [];
 
-      for(const key in responseData){
+      for (const key in responseData) {
         loadedMeals.push({
           id: key,
           name: responseData[key].name,
           description: responseData[key].description,
-          price : responseData[key].price
+          price: responseData[key].price,
         });
       }
       setMeals(loadedMeals);
+      setIsLoading(false);
     };
 
     fetchMeals();
   }, []);
+
+  if (isLoading) {
+    return (
+      <section className={classes.MealsLoading}>
+        <p>Loading...</p>
+      </section>
+    );
+  }
 
   const mealsList = meals.map((meal) => (
     <MealItem
