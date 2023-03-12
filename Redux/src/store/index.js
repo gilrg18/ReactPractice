@@ -1,10 +1,32 @@
 import { createStore } from "redux";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = { counter: 0, showCounter: true };
 
 //Creating this to avoid typo problems in the future
 export const INCREMENT = 'increment';
 
+//preparing a slice of our global state
+//we can create different slices in different files to make our code maintainable
+createSlice({
+  name: 'counter',
+  initialState: initialState,
+  reducers: {
+    increment(state){
+      //we shouldnt manipulate the state directly like this but redux toolkit takes care of it and allows it
+      state.counter++;
+    },
+    decrement(state){
+      state.counter--;
+    },
+    increase(state, action){
+      state.counter = state.counter + action.qty;
+    },
+    toggle(state){
+      state.showCounter = !state.showCounter;
+    },
+  }
+});
 
 const counterReducer = (state = initialState, action) => {
   if (action.type === INCREMENT) {
