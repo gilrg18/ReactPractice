@@ -23,7 +23,9 @@ const counterSlice = createSlice({
       //of the property which will hold any extra data you are dispatching
       //before you could name it like action.qty or action.amount but that doesnt work now.
       //it has to be payload
-      state.counter = state.counter + action.payload;
+      const sum =action.payload.reduce((result, x)=> result + x, 0);
+      state.counter =
+        state.counter + sum;
     },
     toggle(state) {
       state.showCounter = !state.showCounter;

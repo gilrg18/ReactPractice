@@ -18,7 +18,9 @@ const Counter = () => {
 
   const increaseHandler = () => {
     //dispatch({ type: "increase" , qty: 5});
-    dispatch(counterActions.increase(5));
+    //multiple payloads
+    const myPayload=[1,1,1,1,1];
+    dispatch(counterActions.increase(myPayload));
   };
 
   const decrementHandler = () => {
