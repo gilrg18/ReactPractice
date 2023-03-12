@@ -8,9 +8,14 @@ const counterReducer = (state = initialState, action) => {
       counter: state.counter + 1,
       showCounter: state.showCounter,
     };
-    //redux dont merge the new state with the existing state, it replaces it
+    //redux dont merge the new state with the existing state, it overwrites (replaces) it
     //so we have to tell redux to create every propery of the state otherwise it will delete
     //in this case showCounter if we dont add it to the new state
+    //We must always set all pieces of state when we update a piece of state
+
+    //state.counter++
+    //return state;
+    //this works but you should NEVER mutate exisiting state, this could lead to bugs and unpredictable behaviour
   }
 
   if (action.type === "increase") {
