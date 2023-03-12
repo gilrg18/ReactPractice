@@ -7,6 +7,7 @@ const Counter = () => {
   //react redux will automatically set up a subscription for this component
   //this component will rerender everytime state.counter changes
   const myCounter = useSelector((state) => state.counter);
+  const show = useSelector(state=> state.showCounter); //you can have as many useSelectors as u want
   const dispatch = useDispatch();
 
   const incrementHandler = () => {
@@ -21,12 +22,14 @@ const Counter = () => {
     dispatch({ type: "decrement" });
   };
 
-  const toggleCounterHandler = () => {};
+  const toggleCounterHandler = () => {
+    dispatch({type:'toggle'})
+  };
 
   return (
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
-      <div className={classes.value}>{myCounter}</div>
+      <div className={classes.value}>{show && myCounter}.</div>
       <div>
         <button onClick={incrementHandler}>Increment</button>
         <button onClick={increaseHandler}>Increase by 5</button>
