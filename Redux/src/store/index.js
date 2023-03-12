@@ -1,12 +1,15 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
 
-const initialState = { counter: 0, showCounter: true };
+const initialCounterState = {
+  counter: 0,
+  showCounter: true,
+};
 
 //preparing a slice of our global state
 //we can create different slices in different files to make our code maintainable
 const counterSlice = createSlice({
   name: "counter",
-  initialState: initialState,
+  initialState: initialCounterState,
   reducers: {
     increment(state) {
       //we shouldnt manipulate the state directly like this but redux toolkit takes care of it and allows it
@@ -28,18 +31,37 @@ const counterSlice = createSlice({
   },
 });
 
-//configureStore makes merging multiple reducers into one, easier
-const store = configureStore({
-  reducer: counterSlice.reducer,
+const initialAuthState = { isAuthenticated: false };
+
+const authSlice = createSlice({
+  name: "authentication",
+  initialState: initialAuthState,
+  reducers: {
+    login(state) {
+      state.isAuthenticated = true;
+    },
+    logout(state) {
+      state.isAuthenticated = false;
+    },
+  },
 });
+
+//configureStore makes merging multiple reducers into one, easier
+// const store = configureStore({
+//   reducer: counterSlice.reducer,
+// });
 
 //alternitavely we can set a key(counter) to the reducer function(counterSlice.reducer)
 //this is used when we have multiple reducers
-// const store = configureStore({
-//   reducer: { counter: counterSlice.reducer },
-// });
+const store = configureStore({
+  reducer: {
+    counter: counterSlice.reducer,
+    auth: authSlice.reducer,
+  },
+});
 
 //before with redux you had to name your actions and call the reducer functions using dispatch functions with action.type
 //now with redux toolkit you can just export and call your reducer functions using (in this case) counterActions.increment():
-export const counterActions = counterSlice.actions;
+export const counterActions = counterSlice.caseReducers;
+export const authActions = authSlice.actions;
 export default store;

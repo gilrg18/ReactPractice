@@ -7,8 +7,8 @@ const Counter = () => {
   //useSelector receives the state managed by redux and returns the part of the state that we want to extract
   //react redux will automatically set up a subscription for this component
   //this component will rerender everytime state.counter changes
-  const myCounter = useSelector((state) => state.counter);
-  const show = useSelector(state=> state.showCounter); //you can have as many useSelectors as u want
+  const myCounter = useSelector((state) => state.counter.counter);
+  const show = useSelector(state=> state.counter.showCounter); //you can have as many useSelectors as u want
   const dispatch = useDispatch();
 
   const incrementHandler = () => {
