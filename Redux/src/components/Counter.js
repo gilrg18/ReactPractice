@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 //useSelector hook from react-redux to use the store
 import classes from "./Counter.module.css";
+import { INCREMENT } from "../store";
 
 const Counter = () => {
   //useSelector receives the state managed by redux and returns the part of the state that we want to extract
@@ -11,7 +12,7 @@ const Counter = () => {
   const dispatch = useDispatch();
 
   const incrementHandler = () => {
-    dispatch({ type: "increment" });
+    dispatch({ type: INCREMENT });
   };
 
   const increaseHandler = () => {
