@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 //useSelector hook from react-redux to use the store
 import classes from "./Counter.module.css";
-import { counterActions } from "../store";
+import { counterActions } from "../store/counter-slice";
 
 const Counter = () => {
   //useSelector receives the state managed by redux and returns the part of the state that we want to extract
