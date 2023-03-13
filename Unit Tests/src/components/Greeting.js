@@ -2,7 +2,7 @@ const Greeting = () => {
   return (
     <div>
       <h2>Hello World!</h2>
-      <p>It's good to see you!</p>
+      <p>Hi, it's good to see you!</p>
     </div>
   );
 };
