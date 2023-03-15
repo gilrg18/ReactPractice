@@ -15,3 +15,4 @@
 - Handling Side Effects, Reducers and the Context API
 - Http Requests
 - Redux (Login simulator and Counter examples)
+- Unit tests
