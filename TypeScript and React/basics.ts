@@ -45,8 +45,17 @@ user = ["Gil", "Mike"];
 
 //Type Aliases - to avoid type definition repetitions
 type Person = { name: string; age: number }; //custom type Person
-let myPerson: Person = {name:'Gil', age:26};
+let myPerson: Person = { name: "Gil", age: 26 };
 let myPersons: Person[] = [
   { name: "Gil", age: 26 },
   { name: "Mike", age: 28 },
 ];
+
+//Functions and Types
+function add(a: number, b: number): number | string { //the return type can also be inferred if you dont add it
+  return a + b;
+}
+
+function print(value: any): void { //void return type doesnt return anything
+  console.log(value);
+}
