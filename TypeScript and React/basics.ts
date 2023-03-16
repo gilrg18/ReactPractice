@@ -37,3 +37,10 @@ let people: {
 let course = 'React';
 //Doing this is redundant: let course: string = 'React' 
 //course = 123; //error cause course is inferred as a string
+
+
+//Union Types - Allow more than one type
+let curso: string | number = 'react';
+curso = 123;
+let user: string | string[] = 'Gil'
+user = ['Gil', 'Mike']
