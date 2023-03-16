@@ -32,3 +32,8 @@ let people: {
   age: number;
 }[]; //array of objects
 
+
+//Type inference:
+let course = 'React';
+//Doing this is redundant: let course: string = 'React' 
+//course = 123; //error cause course is inferred as a string
