@@ -59,3 +59,23 @@ function add(a: number, b: number): number | string { //the return type can also
 function print(value: any): void { //void return type doesnt return anything
   console.log(value);
 }
+
+
+//GENERICS
+// function inserAtBeginning(array: any[], value: any){
+//   const newArray = [value, ...array];
+//   return newArray;
+// }
+
+// const demoArray = [1,2,3];
+// const updatedArray = inserAtBeginning(demoArray, -1);
+//ts doesnt pick up that updatedArray is an array full of numbers so its type is any[] instead of number[]
+//To fix this we use GENERICS
+function inserAtBeginning<T>(array: T[], value: T) {
+  const newArray = [value, ...array];
+  return newArray;
+}
+
+const demoArray = [1, 2, 3];
+const updatedArray = inserAtBeginning(demoArray, -1);
+//now ts knows what updatedArray is number[]
