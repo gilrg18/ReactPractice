@@ -1,8 +1,12 @@
-function Todos() {
-  return <ul>
-    <li>Learning TypeScript</li>
-    <li>Learning React</li>
-  </ul>
-}
+//FC = Functional Component
+const Todos: React.FC<{ items: string[] }> = (props) => {
+  return (
+    <ul>
+      {props.items.map((item) => (
+        <li key={item}>{item}</li>
+      ))}
+    </ul>
+  );
+};
 
 export default Todos;
