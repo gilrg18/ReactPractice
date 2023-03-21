@@ -1,6 +1,6 @@
 import { Ref, useRef } from "react";
-
-const NewTodo = () => {
+//onAddTodo is a function that returns nothing (void) and gets one argument (text of type string)
+const NewTodo: React.FC<{onAddTodo: (text: string) => void }> = (props) => {
     const todoTextInputRef = useRef<HTMLInputElement>(null);
     const submitHandler = (event: React.FormEvent) => {
         event.preventDefault();
@@ -12,7 +12,8 @@ const NewTodo = () => {
             return;
         }
 
-        
+        props.onAddTodo(enteredText);
+
     }
 
   return (
