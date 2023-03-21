@@ -1,19 +1,21 @@
-import Todo from "../models/todo";
 import TodoItem from "./TodoItem";
-
+import { useContext } from "react";
+import { TodosContext } from "../store/todos-context";
 import classes from "./Todos.module.css";
 
 //FC = Functional Component
-const Todos: React.FC<{ items: Todo[]; removeTodo: (id: string) => void }> = (props) => {
+const Todos: React.FC = () => {
+
+    const todosCtx = useContext(TodosContext);
   return (
     <ul className={classes.todos}>
-      {props.items.map((item) => (
+      {todosCtx.items.map((item) => (
         <TodoItem
           key={item.id}
           todoText={item.text}
           //bind allows us to preconfigure a function for future execution
           //bing(what "this" keyword will refer to , first argument removeTodo() will receive )
-          removeTodo={props.removeTodo.bind(null, item.id)}
+          removeTodo={todosCtx.removeTodo.bind(null, item.id)}
         ></TodoItem>
       ))}
     </ul>
